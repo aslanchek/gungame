@@ -3,12 +3,12 @@ from random import randint
 from Constants import *
 
 class Target:
-    def __init__(self, screen):
+    def __init__(self, game):
         self.Vx = randint(-5, 5)
         self.Vy = randint(-5, 5)
         self.points = 0
         self.live = 1
-        self.screen = screen
+        self.game = game
         self.r = randint(20, 30)
         self.x = randint(300, 750 - self.r)
         self.y = randint(200, 550 - self.r)
@@ -19,7 +19,7 @@ class Target:
         self.points += 1
 
     def render(self):
-        pygame.draw.circle(self.screen, self.color, (self.x, self.y), self.r)
+        pygame.draw.circle(self.game.screen, self.color, (self.x, self.y), self.r)
 
     def move(self):
         self.x += self.Vx
@@ -36,3 +36,5 @@ class Target:
             self.Vy = -self.Vy
         if self.y - self.r < 0: 
             self.Vy = -self.Vy
+    def remove(self):
+        self.game.targets.remove(self)

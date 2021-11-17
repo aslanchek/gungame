@@ -44,6 +44,5 @@ class Ball:
     def render(self):
         pygame.draw.circle(self.game.screen, self.color, (self.x, self.y), self.r)
 
-    def hittest(self, obj):
-       
-         return False
+    def remove(self):
+        self.game.projective.remove(self)

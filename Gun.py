@@ -12,7 +12,7 @@ class Gun:
         self.an = 100
         self.color = GREY
         self.ifShoot = False # эта штука позволяет отслеживать стреляем мы или нет
-        self.r = 15
+        self.r = 15 # радиус шарика
         self.x = 40
         self.y = 450
 
@@ -29,10 +29,14 @@ class Gun:
     def targetting(self, event):
         """Прицеливание. Зависит от положения мыши."""
         if event:
-            self.an = math.atan((event.pos[1]-450) / (event.pos[0]- 40))
+            try:
+                self.an = math.atan((event.pos[1]-450) / (event.pos[0]- 40))
+            except ZeroDivisionError:
+                pass
+            
 
     def render(self):
-        width = 5
+        width = 7
         coords = [
             (self.x, self.y),
             (self.x+(self.length)*math.cos(self.an),
@@ -44,12 +48,12 @@ class Gun:
         pygame.draw.polygon(self.game.screen, self.color, (coords), width=0)
 
     def power_up(self):
-        self.r -= 0.3
+        self.r -= 0.2
         self.power += 1
         self.length += 3
         self.color = RED
 
     def power_to_default(self):
-        self.r = 15
+        self.r = 17
         self.power = 15
         self.length = 50

@@ -28,6 +28,13 @@ class Main:
             elif event.type == pygame.MOUSEMOTION:
                 self.gun.targetting(event)
 
+    def shot(self):
+        for p in self.projective:
+            for t in self.targets:
+                if ((t.x - p.x)**2 + (t.y - p.y)**2 ) < (t.r + p.r)**2:
+                    t.remove()
+                    p.remove()
+
     def main_render(self):
         self.screen.fill(WHITE)
 
@@ -53,7 +60,7 @@ class Main:
 
         # добавление 5ти целей
         for i in range(0, 5):
-            self.targets.append(Target(self.screen))
+            self.targets.append(Target(self))
 
         while self.running:
             clock.tick(FPS)
@@ -64,6 +71,7 @@ class Main:
                 k.move()
 
             self.handle_events()
+            self.shot()
             self.main_render()
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
