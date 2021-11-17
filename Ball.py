@@ -5,7 +5,7 @@ from random import choice
 from Constants import *
 
 class Ball:
-    def __init__(self, game, velocity, angle):
+    def __init__(self, game, velocity, angle, x, y, r):
         """ Конструктор класса ball
 
         Args:
@@ -13,9 +13,9 @@ class Ball:
         y - начальное положение мяча по вертикали
         """
         self.game = game
-        self.x = 40
-        self.y = 450
-        self.r = 10
+        self.x = x
+        self.y = y
+        self.r = r
         self.vx = velocity*math.cos(angle)
         self.vy = -velocity*math.sin(angle)
         self.color = choice(GAME_COLORS)
@@ -31,10 +31,14 @@ class Ball:
         self.vy -= G
         self.x += self.vx
         self.y -= self.vy
-        if(self.y > HEIGHT-self.r):
+        if (self.y > HEIGHT-self.r):
             self.y = HEIGHT-self.r
-            self.vy *= -0.7
-            self.vx *= 0.7
+            self.vy *= -0.8
+            self.vx *= 0.8
+        if (self.x > WIDTH-self.r):
+            self.x = WIDTH-self.r
+            self.vy *= 0.8
+            self.vx *= -0.8
 
 
     def render(self):

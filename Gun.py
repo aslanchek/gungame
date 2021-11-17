@@ -7,10 +7,12 @@ from Ball import *
 class Gun:
     def __init__(self, game):
         self.game = game
-        
+        self.power = 15 # мощность вылета снаряда из пушки, 15 - начальное значение
         self.length = 50
         self.an = 100
         self.color = GREY
+        self.ifShoot = False # эта штука позволяет отслеживать стреляем мы или нет
+        self.r = 15
         self.x = 40
         self.y = 450
 
@@ -20,19 +22,8 @@ class Gun:
         Происходит при отпускании кнопки мыши.
         Начальные значения компонент скорости мяча vx и vy зависят от положения мыши.
         """
-
-        self.game.projective.append(Ball(self.game, 25, self.an))
-
-        # global balls
-        # self.game.shoots += 1
-        # new_ball = Ball(self.game.screen)
-        # new_ball.r += 5
-        # self.an = math.atan2((event.pos[1]-new_ball.y), (event.pos[0]-new_ball.x))
-        # new_ball.vx = self.length * math.cos(self.an)
-        # new_ball.vy = - self.length * math.sin(self.an)
-        # balls.append(new_ball)
-        # self.f2_on = 0
-        # self.length = 10
+        self.game.projective.append(Ball(self.game, self.power, self.an, self.x+(self.length)*math.cos(self.an), self.y+(self.length)*math.sin(self.an), self.r))
+        self.color = GREY
         
 
     def targetting(self, event):
@@ -53,9 +44,12 @@ class Gun:
         pygame.draw.polygon(self.game.screen, self.color, (coords), width=0)
 
     def power_up(self):
-        if self.f2_on:
-            if self.length < 100:
-                self.length += 1
-            self.color = RED
-        else:
-            self.color = GREY
+        self.r -= 0.3
+        self.power += 1
+        self.length += 3
+        self.color = RED
+
+    def power_to_default(self):
+        self.r = 15
+        self.power = 15
+        self.length = 50

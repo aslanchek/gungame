@@ -20,22 +20,29 @@ class Main:
             if event.type == pygame.QUIT:
                 self.running = False
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                self.gun.color = RED
+                self.gun.ifShoot = True
             elif event.type == pygame.MOUSEBUTTONUP:
                 self.gun.fire_end(event)
+                self.gun.power_to_default()
+                self.gun.ifShoot = False
             elif event.type == pygame.MOUSEMOTION:
                 self.gun.targetting(event)
 
     def main_render(self):
         self.screen.fill(WHITE)
 
+        if self.gun.ifShoot:
+            self.gun.power_up()
         self.gun.render()
+
+
 
         for j in self.targets:
             j.render()
 
         for m in self.projective:
             m.render()
+
 
 
         pygame.display.update()
