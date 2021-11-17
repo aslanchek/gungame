@@ -8,14 +8,15 @@ from Ball import *
 class Main:
     def __init__(self, screen):
         self.screen = screen
-        self.gun = Gun(self)
         self.targets = [] # массив содержащий объекты класса Target - цели
         self.projective = [] # массив содержащий объекты класса Ball - запускаемый из пушки шарик
         self.shoots = 0
+        self.gun = Gun(self)
         self.running = True
         self.start()
 
     def handle_events(self):
+        # обработчик событий (кликов мышкой, нажатий клавиш и тд)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
@@ -29,6 +30,7 @@ class Main:
                 self.gun.targetting(event)
 
     def shot(self):
+        # метод отвечает за отслеживание попаданий
         for p in self.projective:
             for t in self.targets:
                 if ((t.x - p.x)**2 + (t.y - p.y)**2 ) < (t.r + p.r)**2:
@@ -36,6 +38,7 @@ class Main:
                     p.remove()
 
     def main_render(self):
+        # метод отвечает за прорисовку всего
         self.screen.fill(WHITE)
 
         if self.gun.ifShoot:

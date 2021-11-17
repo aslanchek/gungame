@@ -7,14 +7,14 @@ from Ball import *
 class Gun:
     def __init__(self, game):
         self.game = game
-        self.power = 15 # мощность вылета снаряда из пушки, 15 - начальное значение
-        self.length = 50
-        self.an = 100
         self.color = GREY
-        self.ifShoot = False # эта штука позволяет отслеживать стреляем мы или нет
+        self.power = 15 # мощность вылета снаряда из пушки, 15 - начальное значение
+        self.length = 50 # длина пушки
+        self.an = 100 # угол поворота пушки
         self.r = 15 # радиус шарика
         self.x = 40
         self.y = 450
+        self.ifShoot = False # эта штука позволяет отслеживать стреляем мы или нет
 
     def fire_end(self, event): # обработка события при отпускании клавиши
         """Выстрел мячом.
@@ -30,7 +30,7 @@ class Gun:
         """Прицеливание. Зависит от положения мыши."""
         if event:
             try:
-                self.an = math.atan((event.pos[1]-450) / (event.pos[0]- 40))
+                self.an = math.atan((event.pos[1]-self.y) / (event.pos[0]-self.x))
             except ZeroDivisionError:
                 pass
             
